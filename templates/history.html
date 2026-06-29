@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>API Request History</h1>
+
+    <table border="1" cellpadding="10" cellspacing="0" width="100%">
+        <tr>
+            <th>ID</th>
+            <th>Method</th>
+            <th>URL</th>
+            <th>Status</th>
+            <th>Date & Time</th>
+        </tr>
+
+        {% for item in history %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.method }}</td>
+            <td>{{ item.url }}</td>
+            <td>{{ item.status_code }}</td>
+            <td>{{ item.request_time }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>
