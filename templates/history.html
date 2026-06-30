@@ -1,39 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API History</title>
+
+    <title>APIHub | History</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 <body>
 
-<div class="container">
+<nav class="navbar">
 
-    <h1>API Request History</h1>
+    <div class="logo">
 
-    <table border="1" cellpadding="10" cellspacing="0" width="100%">
-        <tr>
-            <th>ID</th>
-            <th>Method</th>
-            <th>URL</th>
-            <th>Status</th>
-            <th>Date & Time</th>
-        </tr>
+        APIHub
 
-        {% for item in history %}
-        <tr>
-            <td>{{ item.id }}</td>
-            <td>{{ item.method }}</td>
-            <td>{{ item.url }}</td>
-            <td>{{ item.status_code }}</td>
-            <td>{{ item.request_time }}</td>
-        </tr>
-        {% endfor %}
+    </div>
 
-    </table>
+    <div class="nav-right">
+
+        <a href="/" class="nav-link">
+            Workspace
+        </a>
+
+        <a href="/history" class="nav-link active">
+            History
+        </a>
+
+    </div>
+
+</nav>
+
+<div class="workspace">
+
+    <div class="panel" style="grid-column:1/-1;">
+
+        <div class="panel-header">
+
+            <h2>Request History</h2>
+
+            <p>
+                Every API request made from APIHub is stored here.
+            </p>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Method</th>
+
+                <th>URL</th>
+
+                <th>Status</th>
+
+                <th>Date & Time</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for item in history %}
+
+            <tr>
+
+                <td>{{ item.id }}</td>
+
+                <td>
+
+                    {% if item.method=="GET" %}
+
+                        <span class="badge badge-green">
+                            GET
+                        </span>
+
+                    {% elif item.method=="POST" %}
+
+                        <span class="badge badge-blue">
+                            POST
+                        </span>
+
+                    {% elif item.method=="PUT" %}
+
+                        <span class="badge badge-orange">
+                            PUT
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge badge-red">
+                            DELETE
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td style="font-family:Consolas,monospace;">
+                    {{ item.url }}
+                </td>
+
+                <td>
+
+                    {% if item.status_code >= 200 and item.status_code < 300 %}
+
+                        <span class="badge badge-green">
+
+                            {{ item.status_code }}
+
+                        </span>
+
+                    {% elif item.status_code >=400 and item.status_code<500 %}
+
+                        <span class="badge badge-orange">
+
+                            {{ item.status_code }}
+
+                        </span>
+
+                    {% elif item.status_code>=500 %}
+
+                        <span class="badge badge-red">
+
+                            {{ item.status_code }}
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge badge-blue">
+
+                            {{ item.status_code }}
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {{ item.request_time }}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
 
 </body>
+
 </html>
