@@ -22,33 +22,43 @@ def history():
 @app.route("/send_request", methods=["POST"])
 def send_request():
 
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
-    url = data.get("url")
-    method = data.get("method")
-    headers = data.get("headers", {})
-    body = data.get("body", {})
+        url = data.get("url")
+        method = data.get("method")
+        headers = data.get("headers", {})
+        body = data.get("body", {})
 
-    start = time.time()
+        start = time.time()
 
-    response = requests.request(
-        method=method,
-        url=url,
-        headers=headers,
-        json=body if method in ["POST", "PUT"] else None
-    )
+        response = requests.request(
+            method=method,
+            url=url,
+            headers=headers,
+            json=body if method in ["POST", "PUT"] else None,
+            timeout=10
+        )
 
-    end = time.time()
+        end = time.time()
 
-    save_history(url, method, response.status_code)
+        save_history(url, method, response.status_code)
 
-    return jsonify({
-        "status": response.status_code,
-        "time": round((end - start) * 1000, 2),
-        "headers": dict(response.headers),
-        "body": response.text
-    })
+        return jsonify({
+            "status": response.status_code,
+            "time": round((end - start) * 1000, 2),
+            "headers": dict(response.headers),
+            "body": response.text
+        })
 
+    except requests.exceptions.RequestException as e:
+
+        return jsonify({
+            "status": "Error",
+            "time": "-",
+            "headers": {},
+            "body": str(e)
+        })
 
 if __name__ == "__main__":
     app.run(debug=True)
