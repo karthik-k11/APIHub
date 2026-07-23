@@ -223,34 +223,6 @@ Select DELETE and send the request.
 
 ---
 
-## Screenshots
-
-### Workspace
-
-Add screenshot here.
-
-```text
-screenshots/workspace.png
-```
-
-### API Response
-
-Add screenshot here.
-
-```text
-screenshots/response.png
-```
-
-### History Page
-
-Add screenshot here.
-
-```text
-screenshots/history.png
-```
-
----
-
 ## Database Schema
 
 ### api_history
@@ -290,17 +262,5 @@ Potential enhancements:
 - Copy response button
 - Request collections
 - Environment variables support
-
----
-
-## Author
-
-**Karthik K**
-
-Associate AI Engineer Intern
-
-Bengaluru, India
-
-GitHub: https://github.com/your-github-username
 
 ---
